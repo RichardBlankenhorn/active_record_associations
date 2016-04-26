@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 feature 'Creating Cars' do
+  let(:user) { FactoryGirl.create(:user) }
+
   scenario 'can create a car' do
+    signin_as(user)
+
     visit '/'
 
     click_link 'New Car'
@@ -18,6 +22,8 @@ feature 'Creating Cars' do
   end
 
   scenario 'can create a second car' do
+    signin_as(user)
+
     visit '/'
 
     click_link 'New Car'
@@ -46,5 +52,15 @@ feature 'Creating Cars' do
     expect(page).to have_content("1969 Toyota Camry created")
     expect(page).to have_content("Ford Mustang 1969 $2,300.00")
     expect(page).to have_content("Toyota Camry 1969 $1,200.00")
+  end
+
+  scenario 'can not visit the new care page when not logged in' do
+    visit root_path
+
+    expect(page).to_not have_link('New Car')
+
+    visit new_car_path
+    expect(page).to have_text('Access not allowed')
+    expect(page.current_path).to eq(root_path)
   end
 end

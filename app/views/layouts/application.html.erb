@@ -34,6 +34,9 @@
           <li class="active"><a href="#">Home</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
+          <% if current_user %>
+            <%= link_to 'My Cars', my_cars_path %>
+          <% end %>
         </ul>
       </div>
     </div>

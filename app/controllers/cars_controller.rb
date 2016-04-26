@@ -23,13 +23,20 @@ class CarsController < ApplicationController
   def show
   end
 
+  def my_cars
+    @cars = Car.where(user_id: current_user)
+    render :index
+  end
+
   # GET /cars/new
   def new
     @car = Car.new
+    authorize(@car)
   end
 
   # GET /cars/1/edit
   def edit
+    authorize(@car)
   end
 
   # POST /cars
@@ -65,6 +72,7 @@ class CarsController < ApplicationController
   # DELETE /cars/1
   # DELETE /cars/1.json
   def destroy
+    authorize(@car)
     @car.destroy
     respond_to do |format|
       format.html { redirect_to cars_url, notice: 'Car was successfully destroyed.' }

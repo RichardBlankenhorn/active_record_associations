@@ -68,3 +68,16 @@ module Capybara
     end
   end
 end
+
+module Helpers
+  def signin_as(user)
+    visit login_path
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
+    click_button 'Login'
+  end
+end
+
+RSpec.configure do |c|
+  c.include Helpers
+end
