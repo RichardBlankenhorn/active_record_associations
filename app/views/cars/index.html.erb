@@ -1,7 +1,9 @@
 <div class="page-header">
+  <% if policy(Car).new? %>
   <%= link_to new_car_path, class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-plus"></span>
     New Car
+      <% end %>
   <% end %>
   <h1>Listing cars</h1>
 </div>
@@ -14,9 +16,7 @@
         <th>Model</th>
         <th>Year</th>
         <th>Price</th>
-        <th></th>
-        <th></th>
-        <th></th>
+        <th colspan="3">Actions</th>
       </tr>
     </thead>
 
@@ -30,8 +30,12 @@
           <td><%= link_to 'Claim', claim_car_path(car) %></td>
         <% end %>
         <td><%= link_to 'Show', car %></td>
-        <td><%= link_to 'Edit', edit_car_path(car) %></td>
-        <td><%= link_to 'Destroy', car, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if policy(car).edit? %>
+          <td><%= link_to 'Edit', edit_car_path(car) %></td>
+        <% end %>
+        <% if policy(car).destroy? %>
+          <td><%= link_to 'Destroy', car, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       <% end %>
     </tbody>
   </table>

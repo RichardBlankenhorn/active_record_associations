@@ -3,9 +3,11 @@
     <span class="glyphicon glyphicon-list-alt"></span>
     Back
   <% end %>
+  <% if policy(@car).edit? %>
   <%= link_to edit_car_path(@car), class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-pencil"></span>
     Edit
+    <% end %>
   <% end %>
   <h1>Show car</h1>
 </div>

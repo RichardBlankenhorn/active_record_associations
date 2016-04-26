@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 feature 'Editing Cars' do
+  let(:user) { FactoryGirl.create(:user) }
   scenario 'can edit a car' do
+    signin_as(user)
+
     visit '/'
 
     click_link 'New Car'
@@ -24,5 +27,14 @@ feature 'Editing Cars' do
 
     expect(page).to have_content("1969 Ford Mustang updated")
     expect(page).to have_content("$46,000.00")
+  end
+
+  scenario 'is not allowed for non-logged in users' do
+    car = FactoryGirl.create(:car)
+
+    visit edit_car_path(car)
+
+    expect(page).to have_text('Access not allowed')
+    expect(page.current_path).to eq(root_path)
   end
 end
